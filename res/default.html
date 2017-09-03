@@ -1,0 +1,166 @@
+<html window-frame="solid-with-shadow" lang="zh">
+<head>
+    <meta http-equiv="content-type" content-type="text/html;charset=UTF-8" />
+    <style>
+    html, body {
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        background-color: #262626;
+    }
+
+    header, img#slideshow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 640px;
+    }
+
+    img#slideshow {
+        height: 300px;
+    }
+
+    .over-top {
+        transition: slide-over-top(quad-in-out,800ms);
+    }
+
+    .over-bottom {
+        transition: slide-over-bottom(quad-in-out,800ms);
+    }
+
+    .over-left {
+        transition: slide-over-left(quad-in-out,800ms);
+    }
+
+    .over-right {
+        transition: slide-over-right(quad-in-out,800ms);
+    }
+
+    header {
+        flow: horizontal;
+        z-index: 9;
+    }
+
+    window-title {
+        display: block;
+        flow: text;
+        width: 1*;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.0em;
+        line-height: 1.6em;
+        padding-left: 16dip;
+        padding-top: 8dip;
+    }
+
+    window-button {
+        display: block;
+        behavior: clickable;
+        padding: 6dip;
+    }
+
+    window-button > img {
+        width: 16dip;
+        height: 16dip;
+    }
+
+    window-button:hover {
+        background: #666;
+    }
+
+    window-button#window-close:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    #install-ui {
+        flow: vertical;
+        padding-left: 10dip;
+        padding-bottom: 10dip;
+        color: rgba(255, 255, 255, 0.6);
+        horizontal-align: center;
+        margin-top: 320px;
+    }
+
+    #install-btn {
+        display: inline-block;
+        background: none;
+        background-color: #363636;
+        foreground: none;
+        color: white;
+        font-size: 1.2em;
+        box-shadow: 0 0 8dip 0 rgba(0, 0, 0, 0.6);
+    }
+
+    #install-btn:hover {
+        background-color: red;
+    }
+
+    #install-btn:active {
+        background-color: orangered;
+    }
+
+    #install-ui > span {
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin-top: 10dip;
+    }
+
+    a {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 1.0em;
+    }
+
+    #license {
+        position: absolute;
+        left: 10dip;
+        bottom: 10dip;
+    }
+    </style>
+    <script type="text/tiscript">
+    function moveToScreenCenter() {
+        var (screenWidth, screenHeight) = view.screenBox(#workarea, #dimension);
+        var windowWidth = 640;
+        var windowHeight = 420;
+        view.move((screenWidth - windowWidth) / 2, (screenHeight - windowHeight) / 2, windowWidth, windowHeight, true);
+    }
+    moveToScreenCenter();
+
+    var images = [
+        "images/init_title_image_0.png",
+        "images/init_title_image_1.png",
+        "images/init_title_image_2.png",
+        "images/init_title_image_3.png",
+    ];
+
+    var effects = ["over-top", "over-bottom", "over-left", "over-right"];
+
+    var imageIndex = 0;
+    var slidetimer = function() {
+        var effectIndex = rand(effects.length);
+        var slideshow = $(img#slideshow);
+        slideshow.@#class = effects[effectIndex];
+        if (++imageIndex >= images.length) imageIndex = 0;
+        slideshow.update(:: slideshow.@#src = images[imageIndex]);
+        return true;
+    };
+
+    function self.ready() {
+        $(body).timer(5000, slidetimer);
+    }
+    </script>
+</head>
+<body>
+    <img id="slideshow" src="images/init_title_image_0.png" />
+    <header role="window-caption">
+        <window-title>Can Play Emulator</window-title>
+        <window-button #window-close role="window-close"><img src="images/window-close.png" /></window-button>
+    </header>
+    <div id="install-ui">
+        <button id="install-btn">现在安装</button>
+        <span><a id="install-location" href="#">选择安装位置</a></span>
+    </div>
+    <a id="license" href="#">我同意用户服务协议</a>
+</body>
+</html>
