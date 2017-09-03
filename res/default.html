@@ -1,41 +1,29 @@
 <html window-frame="solid-with-shadow" lang="zh">
 <head>
-    <meta http-equiv="content-type" content-type="text/html;charset=UTF-8" />
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <style>
     html, body {
         padding: 0;
         margin: 0;
     }
 
+    html {
+        overflow: hidden;
+    }
+
     body {
         background-color: #262626;
     }
 
-    header, img#slideshow {
+    header, img#slideshow, #install-ui {
         position: absolute;
         top: 0;
         left: 0;
-        width: 640px;
+        width: 640dip;
     }
 
     img#slideshow {
-        height: 300px;
-    }
-
-    .over-top {
-        transition: slide-over-top(quad-in-out,800ms);
-    }
-
-    .over-bottom {
-        transition: slide-over-bottom(quad-in-out,800ms);
-    }
-
-    .over-left {
-        transition: slide-over-left(quad-in-out,800ms);
-    }
-
-    .over-right {
-        transition: slide-over-right(quad-in-out,800ms);
+        height: 300dip;
     }
 
     header {
@@ -79,7 +67,7 @@
         padding-bottom: 10dip;
         color: rgba(255, 255, 255, 0.6);
         horizontal-align: center;
-        margin-top: 320px;
+        margin-top: 320dip;
     }
 
     #install-btn {
@@ -116,13 +104,14 @@
         position: absolute;
         left: 10dip;
         bottom: 10dip;
+        width: 100%;
     }
     </style>
     <script type="text/tiscript">
     function moveToScreenCenter() {
         var (screenWidth, screenHeight) = view.screenBox(#workarea, #dimension);
-        var windowWidth = 640;
-        var windowHeight = 420;
+        var windowWidth = px(dip(640).toFloat(#px));
+        var windowHeight = px(dip(420).toFloat(#px));
         view.move((screenWidth - windowWidth) / 2, (screenHeight - windowHeight) / 2, windowWidth, windowHeight, true);
     }
     moveToScreenCenter();
@@ -134,13 +123,18 @@
         "images/init_title_image_3.png",
     ];
 
-    var effects = ["over-top", "over-bottom", "over-left", "over-right"];
+    var effects = [
+        "slide-over-top(quad-in-out,800ms)",
+        "slide-over-bottom(quad-in-out,800ms)",
+        "slide-over-left(quad-in-out,800ms)",
+        "slide-over-right(quad-in-out,800ms)"
+    ];
 
     var imageIndex = 0;
     var slidetimer = function() {
         var effectIndex = rand(effects.length);
         var slideshow = $(img#slideshow);
-        slideshow.@#class = effects[effectIndex];
+        slideshow.style#transition = effects[effectIndex];
         if (++imageIndex >= images.length) imageIndex = 0;
         slideshow.update(:: slideshow.@#src = images[imageIndex]);
         return true;

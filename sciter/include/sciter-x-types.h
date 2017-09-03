@@ -88,10 +88,10 @@ enum GFX_LAYER
   # define vsnprintf vsnprintf_s
   #endif
 
-  #if __STDC_WANT_SECURE_LIB__
+  //#if __STDC_WANT_SECURE_LIB__
   // use the safe version of `wcsncpy` if wanted
-  # define wcsncpy wcsncpy_s
-  #endif
+  //# define wcsncpy wcsncpy_s
+  //#endif
 
 
   #ifdef STATIC_LIB

@@ -32,7 +32,7 @@ elseif is_plat("windows") then
         add_defines("NDEBUG")
         add_cxxflags("/GL");
     end
-    add_cxxflags("/Zc:wchar_t", "/Zc:inline", "/Gd", "/EHsc", "/Od", "/Oi", "/Oy-")
+    add_cxxflags("/Zc:wchar_t", "/Zc:inline", "/Gd", "/EHsc", "/Ox", "/Oi", "/Oy-")
     add_cxxflags("/Gy", "/Gm-", "/Zc:forScope", "/analyze-", "/fp:fast", "/WX-")
     add_ldflags("/OPT:REF", "/OPT:ICF", "/LTCG:incremental", "/MACHINE:X86", "/SAFESEH")
     add_ldflags("/DYNAMICBASE", "/INCREMENTAL:NO", "/SUBSYSTEM:WINDOWS,5.01")
@@ -61,7 +61,7 @@ if is_plat("macosx") then
     add_files("src/webview/*.mm")
     add_files("sciter/include/sciter-osx-main.mm")
 elseif is_plat("windows") then
-    add_includedirs("src/win", "vbox/mscom/include", "vmp/include")
+    add_includedirs("src/win")
     add_ldflags("ws2_32.lib")
     add_ldflags("boost/win32/libboost_system-vc141-mt-s-1_64.lib")
     add_ldflags("boost/win32/libboost_filesystem-vc141-mt-s-1_64.lib")
